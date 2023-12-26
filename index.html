@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f4;
+    }
+
+    #password {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #length {
+      margin-bottom: 20px;
+    }
+
+    #generate {
+      padding: 10px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Password Generator</h2>
+  <div id="password">Your secure password will appear here</div>
+  <div id="length">
+    <label for="passwordLength">Password Length: </label>
+    <input type="number" id="passwordLength" min="4" max="20" value="12">
+  </div>
+  <button id="generate" onclick="generatePassword()">Generate Password</button>
+
+  <script>
+    const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numberChars = '0123456789';
+    const symbolChars = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+
+    function generatePassword() {
+      const length = document.getElementById('passwordLength').value;
+      const includeLowercase = confirm('Include lowercase characters?');
+      const includeUppercase = confirm('Include uppercase characters?');
+      const includeNumbers = confirm('Include numbers?');
+      const includeSymbols = confirm('Include symbols?');
+
+      let characters = '';
+      let password = '';
+
+      if (includeLowercase) characters += lowercaseChars;
+      if (includeUppercase) characters += uppercaseChars;
+      if (includeNumbers) characters += numberChars;
+      if (includeSymbols) characters += symbolChars;
+
+      if (characters === '') {
+        alert('Please select at least one character type.');
+        return;
+      }
+
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        password += characters.charAt(randomIndex);
+      }
+
+      document.getElementById('password').textContent = password;
+    }
+  </script>
+</body>
+</html>
